@@ -2,34 +2,21 @@
 
 ## Overview
 
-Quantitative Structure-Odor Relationship (QSOR) modeling seeks to predict how a molecule smells based on its structure. With advancements in deep learning and graph neural networks (GNNs) that can learn directly from molecular graphs [1–4], this long-standing interdisciplinary challenge—spanning chemistry, neuroscience, and machine learning—is gaining renewed attention [5].
+Quantitative Structure-Odor Relationship (QSOR) modeling seeks to predict how a molecule smells based on its structure. With advancements in deep learning and graph neural networks (GNNs) that can learn directly from molecular graphs, this long standing interdisciplinary challenge spanning chemistry, neuroscience, and machine learning is gaining attention.
 
-Human odor perception is driven by interactions between odorant molecules and hundreds of olfactory receptors in the nose [6, 7]. By leveraging machine learning to model this process, we can design novel synthetic fragrances, reduce dependency on natural raw materials, and improve our understanding of how the brain processes smells.
+Human odor perception is driven by interactions between odorant molecules and hundreds of olfactory receptors in the nose. By leveraging machine learning to model this process, we can design novel synthetic fragrances, reduce dependency on natural raw materials, and improve our understanding of how the brain processes smells.
 
-This project builds upon recent work to improve predictive modeling for molecular odor using GNNs.
+While several recent studies have explored machine learning approaches to odor prediction, there remains significant room for improvement in generalizability, interpretability, and chemical insight. Among the foundational works in this space, *Machine Learning for Scent* by Sánchez-Lengeling et al. and the *Principal Odor Map (POM)* proposed by Lee et al. have been especially influential. These studies offered strong baselines, modeling strategies, and odor representation frameworks that guided and informed this project. The open-source [POM GitHub repository](https://github.com/ARY2260/openpom) also proved useful for understanding practical implementation details.
 
-## Objectives
-
-- **Improve Baseline Results**  
-  Reproduce and enhance results from the paper *Machine Learning for Scent* [8].
-
-- **Incorporate Functional Group Features**  
-  Extend molecular feature representations by adding functional group information.
-
-- **Add Odor Hierarchy**  
-  Enrich odor space using hierarchical relationships between odor descriptors  
-  _e.g., `meaty → chicken → roast chicken`_.
-
-- **Include Explainability**  
-  Introduce subgraph-based explanation methods to highlight molecular regions influencing to specific odors.
+This project builds upon these efforts by extending feature representations, incorporating functional group information, and modeling odor descriptor hierarchies. For a detailed description of methodology, experiments, and results, please refer to the **upcoming paper**.
 
 ---
 
 ### Setup
 ```sh
 # Clone the repository
-git clone https://github.com/SumanBasava11/GNN_On_OdorPrediction.git
-cd GNN_On_OdorPrediction
+git clone https://github.com/Suman1108/Molecule_Odor_Classification_with_GNN.git
+cd Molecule_Odor_Classification_with_GNN
 
 # Create a virtual environment
 python -m venv myenv
@@ -37,12 +24,12 @@ source myenv/bin/activate  # On Windows use: myenv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
-```
+``` 
 
 ## Usage
 ```sh
 # Train and Evaluate the model
-python main2.py
+python TrainEvaluate.py
 ```
 ## References
 
@@ -55,6 +42,8 @@ python main2.py
 7. Mainland et al. (2014). *The Missense of Smell: Functional Variability in the Human Odorant Receptor Repertoire*.  
 8. Sánchez-Lengeling et al. (2023). *Machine Learning for Scent: Learning Generalizable Perceptual Representations of Small Molecules*.
 
+9. Lee, B. K., Mayhew, E. J., Sánchez-Lengeling, B., Wei, J. N., Qian, W. W., Little, K. A.,& Wiltschko, A. B. (2022). *Principal Odor Map unifies diverse tasks in human olfactory perception*. Nature, 601(7891), 177–182. https://doi.org/10.1038/s41586-021-04276-0
+
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the Apache-2.0 License.
 
