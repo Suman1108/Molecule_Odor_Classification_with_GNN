@@ -7,7 +7,7 @@ from rdkit import Chem
 from tqdm import tqdm
 
 from Featurizer.mol_features import *
-from Functional_Group.hard_encode_fgs import *
+from Featurizer.functionalGroup_feature.hard_encode_fgs import *
 
 def plot_and_save(feature_df, feature_names, continuous_features, discrete_features, output_dir, plots_per_figure=12):
     os.makedirs(output_dir, exist_ok=True)
@@ -57,7 +57,7 @@ def plot_and_save(feature_df, feature_names, continuous_features, discrete_featu
 def main():
     # Load SMILES data
     df = pd.read_csv(
-        "C:/Users/suman/OneDrive/Bureau/Internship_Study/GNN_On_OdorPrediction/data/(Saturated)SoS_Full.csv",
+        "PreprocessData/FrequentOdorExtraction/(sat)openpom_Top138.csv",
         encoding='ISO-8859-1'
     )
     smiles_list = df["SMILES"].dropna().tolist()

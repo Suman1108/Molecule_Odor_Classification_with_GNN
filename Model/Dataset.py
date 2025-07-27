@@ -2,14 +2,12 @@ import torch
 from torch.utils.data import Dataset
 from torch_geometric.data import Batch
 from Featurizer.from_smiles import from_smiles
-# from reproduce_baseline.MPNN_Deepchem.GraphFeaturizer_deepchem import GraphFeaturizer
 
 # Dataset class
 class OdorDataset(torch.utils.data.Dataset):
     def __init__(self, smiles_list, labels):
         self.smiles_list = smiles_list
         self.labels = labels
-        # self.featurizer = GraphFeaturizer() 
 
     def __len__(self):
         return len(self.smiles_list)
@@ -17,7 +15,6 @@ class OdorDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         smiles = self.smiles_list[idx]
         data = from_smiles(smiles)
-        # data = self.featurizer.featurize(smiles)
         label = torch.tensor(self.labels[idx], dtype=torch.float)
         return data, label
 
@@ -48,5 +45,4 @@ def collate_fn(batch):
         raise ValueError("No valid graphs in batch!")
     
     batched_graphs = MoleculeDataBatch.from_data_list(graphs)
-    # batched_graphs = Batch.from_data_list(graphs) 
     return batched_graphs, labels

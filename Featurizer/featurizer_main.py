@@ -11,7 +11,7 @@ from Featurizer.mol_features import get_molecular_features
 
 # Main function to features and print them to a file
 def main():
-    df = pd.read_csv('C:/Users/suman/OneDrive/Bureau/Internship_Study/GNN_On_OdorPrediction/data/Data_Sampling/FrequentOdor_extraction/(sat)mapped+unmapped_odors_openPOM_Top138.csv', encoding='ISO-8859-1')
+    df = pd.read_csv('PreprocessData/FrequentOdorExtraction/(sat)openpom_Top138.csv', encoding='ISO-8859-1')
     output_path = "Featurizer/smiles_features_output.txt"
 
     with open(output_path, "w") as f:

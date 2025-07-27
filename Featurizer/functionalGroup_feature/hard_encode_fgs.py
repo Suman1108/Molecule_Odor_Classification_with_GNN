@@ -1,7 +1,6 @@
 from rdkit import Chem
-import pandas as pd
 
-# Define SMARTS patterns for all 45 functional groups
+# Define SMARTS patterns for all 40 functional groups
 FG_SMARTS_PATTERNS = {
     'Acid': Chem.MolFromSmarts('[CX3](=O)[OX2H1]'),               # Carboxylic acid -COOH
     'Acetamide': Chem.MolFromSmarts('NC(=O)C'),                   # Acetamide group
@@ -24,7 +23,7 @@ FG_SMARTS_PATTERNS = {
     'Imino': Chem.MolFromSmarts('[NX2]=C'),                       # Imino group
     'Ketones': Chem.MolFromSmarts('C(=O)[#6]'),                   # Ketone group
     'Lactone': Chem.MolFromSmarts('O=C1OC=CC1'),                  # Approximate lactone ring
-    'N-Compounds': Chem.MolFromSmarts('[NX3]'),                   # Any nitrogen with 3 connection                  # Isocyanate
+    'N-Compounds': Chem.MolFromSmarts('[NX3]'),                   # Any nitrogen with 3 connection
     'Oximes': Chem.MolFromSmarts('C=NO'),                         # Oxime group
     'Methoxy': Chem.MolFromSmarts('OC'),                          # Methoxy group
     'Oxirane': Chem.MolFromSmarts('C1OC1'),                       # Epoxide ring
@@ -57,38 +56,3 @@ def count_functional_groups(mol):
         matches = mol.GetSubstructMatches(pattern)
         counts.append(len(matches))
     return counts
-
-# # Load the dataset from CSV file (replace 'your_file.csv' with your CSV path)
-# df = pd.read_csv(r'C:\Users\suman\OneDrive\Bureau\Internship_Study\GNN_On_OdorPrediction\data\openPOMData\Mapped_OpenPOM + unmapped_odor.csv')
-
-# # Convert SMILES to RDKit Mol objects, skip invalid smiles
-# molecules = []
-# for smi in df['SMILES']:
-#     mol = Chem.MolFromSmiles(smi)
-#     if mol is not None:
-#         molecules.append(mol)
-
-# # Initialize min and max counts lists
-# min_counts = [float('inf')] * len(FG_NAMES)
-# max_counts = [0] * len(FG_NAMES)
-
-# # Calculate min and max counts
-# for mol in molecules:
-#     fg_counts = count_functional_groups(mol)
-#     for i, count in enumerate(fg_counts):
-#         if count < min_counts[i]:
-#             min_counts[i] = count
-#         if count > max_counts[i]:
-#             max_counts[i] = count
-
-# # Fix min_counts for cases with no molecules
-# min_counts = [0 if x == float('inf') else x for x in min_counts]
-
-# # Write the results to a file
-# with open('C:/Users/suman/OneDrive/Bureau/Internship_Study/GNN_On_OdorPrediction/Functional_Group/fg_count_ranges.txt', 'w') as f:
-#     f.write(f"{'Functional Group':<20} {'Min Count':<10} {'Max Count':<10}\n")
-#     f.write("="*45 + "\n")
-#     for name, min_c, max_c in zip(FG_NAMES, min_counts, max_counts):
-#         f.write(f"{name:<20} {min_c:<10} {max_c:<10}\n")
-
-# print("Finished! Results saved to 'fg_count_ranges.txt'")

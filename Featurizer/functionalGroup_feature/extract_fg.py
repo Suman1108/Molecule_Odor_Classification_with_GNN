@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 from rdkit import Chem
 from collections import Counter
@@ -60,8 +59,8 @@ for name, smarts in fg_smarts.items():
     else:
         print(f"Warning: SMARTS pattern failed to compile for {name}: {smarts}")
 
-# Load your SMILES dataset
-df = pd.read_csv('C:/Users/suman/OneDrive/Bureau/Internship_Study/GNN_On_OdorPrediction/data/Data_Sampling/FrequentOdor_extraction/(sat)mapped+unmapped_odors_openPOM_Top138.csv', encoding='ISO-8859-1')  # Change path and filename as needed
+# Load dataset
+df = pd.read_csv('PreprocessData/FrequentOdorExtraction/(sat)openpom_Top138.csv', encoding='ISO-8859-1')
 
 output_path = 'functional_groups_output.txt'
 
@@ -73,7 +72,7 @@ with open(output_path, 'w') as out_file:
     out_file.write("SMILES\tFunctionalGroups\n")
 
     for idx, row in df.iterrows():
-        smiles = row['SMILES']  # Make sure your CSV has a 'SMILES' column
+        smiles = row['SMILES']
         mol = Chem.MolFromSmiles(smiles)
 
         if mol is None:

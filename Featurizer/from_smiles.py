@@ -1,7 +1,5 @@
 from rdkit import Chem
-import pandas as pd
 from torch_geometric.data import Data
-from sklearn.preprocessing import StandardScaler
 from Featurizer.node_features import get_node_features
 from Featurizer.edge_features import get_edge_features
 from Featurizer.mol_features import *

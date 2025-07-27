@@ -1,25 +1,19 @@
-import os
 import torch
 import pandas as pd
 import numpy as np
 from torch.utils.data import DataLoader
-from sklearn.metrics import f1_score, precision_score, recall_score, roc_auc_score, hamming_loss
+from sklearn.metrics import f1_score, precision_score, recall_score, roc_auc_score
 from sklearn.exceptions import UndefinedMetricWarning
-from iterstrat.ml_stratifiers import MultilabelStratifiedKFold, IterativeStratification, RepeatedMultilabelStratifiedKFold, MultilabelStratifiedShuffleSplit
 from rdkit import RDLogger
-from torch.optim.lr_scheduler import CosineAnnealingLR, OneCycleLR 
-import warnings
-from sklearn.metrics import precision_recall_curve
-from torch.utils.data import random_split, Subset
+from torch.optim.lr_scheduler import CosineAnnealingLR 
 
 # Custom imports
-from reproduce_baseline.configuration import *
-from reproduce_baseline.model import OdorClassifier
-# from different_models.RB_Best import OdorClassifier
-from reproduce_baseline.Dataset import OdorDataset, collate_fn
-from reproduce_baseline.box_plot import *
-# from reproduce_baseline.MPNN.mpnn_model import OdorClassifier
+from Model.utils import *
+from Model.model import OdorClassifier
+from Model.Dataset import OdorDataset, collate_fn
+
 # Suppress RDKit and sklearn warnings
+import warnings
 RDLogger.logger().setLevel(RDLogger.ERROR)
 warnings.simplefilter("ignore", category=UndefinedMetricWarning)
 from typing import Tuple, Optional, List
@@ -46,9 +40,6 @@ def random_stratified_split(
     """
     if seed is not None:
         np.random.seed(seed)
-    
-    # if w is None:
-    #     w = np.ones_like(y)
 
     y_present = y != 0
 
@@ -184,7 +175,7 @@ def evaluate(model, loader, device, split = "Val"):
 
 def main():
     df = pd.read_csv(
-        'C:/Users/suman/OneDrive/Bureau/Internship_Study/GNN_On_OdorPrediction/data/Data_Sampling/FrequentOdor_extraction/(sat)mapped+unmapped_odors_openPOM_Top138.csv',
+        'PreprocessData/FrequentOdorExtraction/(sat)openpom_Top138.csv',
         encoding='ISO-8859-1'
     )
     smiles = df["smiles"].values
@@ -296,40 +287,6 @@ def main():
     print_stats("Validation F1", all_val_f1s)
     mean_auc, ci_lower, ci_upper = compute_confidence_interval(all_val_aurocs)
     print(f"\nValidation AUROC:\nMean: {mean_auc:.4f}, 95% CI: ({ci_lower:.4f}, {ci_upper:.4f})")
-
-    # Combine predictions across folds
-    y_trues = np.concatenate(fold_y_trues, axis=0)
-    y_preds = np.concatenate(fold_y_preds, axis=0)
-    y_probs = np.concatenate(fold_y_probs, axis=0)
-
-    # Compute per-label metrics
-    per_label_f1 = []
-    per_label_auroc = []
-    descriptor_metrics = []
-
-    for i in range(y_trues.shape[1]):
-        try:
-            f1 = f1_score(y_trues[:, i], y_preds[:, i], zero_division=1)
-            auroc = roc_auc_score(y_trues[:, i], y_probs[:, i])
-            support = int(np.sum(y_trues[:, i]))
-        except ValueError:
-            f1, auroc = float('nan'), float('nan'), 0
-        # per_label_f1.append(f1)
-        # per_label_auroc.append(auroc)
-        descriptor_metrics.append((label_names[i], f1, auroc, support))
-
-    # Sort by F1 (desc), then AUROC (desc)
-    descriptor_metrics_sorted = sorted(
-    descriptor_metrics, key=lambda x: (x[2], x[1]), reverse=True
-    )
-
-    # Save results to a single .txt file
-    output_path = "C:/Users/suman/OneDrive/Bureau/Internship_Study/GNN_On_OdorPrediction/reproduce_baseline/per_descriptors_metrics.txt"
-    with open(output_path, "w") as f:
-        f.write("Descriptor\tF1\tAUROC\tSupport\n")
-        for name, f1, auc, support in descriptor_metrics_sorted:
-            f.write(f"{name}\t{f1:.4f}\t{auc:.4f}\t{support}\n")
-
-    print(f"\nSaved per-descriptor metrics to: {output_path}")
+    
 if __name__ == "__main__":
     main()
