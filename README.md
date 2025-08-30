@@ -8,7 +8,7 @@ Human odor perception is driven by interactions between odorant molecules and hu
 
 While several recent studies have explored machine learning approaches to odor prediction, there remains significant room for improvement in generalizability, interpretability, and chemical insight. Among the foundational works in this space, *Machine Learning for Scent* by Sánchez-Lengeling et al. and the *Principal Odor Map (POM)* proposed by Lee et al. have been especially influential. These studies offered strong baselines, modeling strategies, and odor representation frameworks that guided and informed this project. The open-source [POM GitHub repository](https://github.com/ARY2260/openpom) also proved useful for understanding practical implementation details.
 
-This project builds upon these efforts by extending feature representations, incorporating functional group information, and modeling odor descriptor hierarchies. For a detailed description of methodology, experiments, and results, please refer to the **upcoming paper**.
+This project builds upon these efforts by extending feature representations, incorporating functional group information, and modeling odor descriptor hierarchies. For a detailed description of methodology, experiments, and results, please refer to the research paper available in folder - Paper and Slides.
 
 ---
 
